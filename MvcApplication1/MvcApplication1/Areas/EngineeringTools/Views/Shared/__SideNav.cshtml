@@ -1,20 +1,68 @@
 ﻿<div class="well sidebar-nav sidebar-nav-fixed">
     <ul class="nav nav-list">
         <li class="nav-header">Meso Wind</li>
-        <li class="active"><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li class="nav-header">Sidebar</li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li class="nav-header">Sidebar</li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        <li>
+            <a href="@Url.Action("Database", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-globe"></i> Database
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("CurrentData", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-table"></i> Current Data
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("VelocityFreq", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-bar-chart"></i> Velocity Freq.
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("FreqPerSector", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-asterisk"></i> Freq. per Sector
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("MeanVelocityPerSector", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-asterisk"></i> Mean Velocity per Sector
+            </a>
+        </li>
+        <li class="nav-header">Wake Simulation</li>
+        <li>
+            <a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">
+                <i class="icon-cog"></i> General Properties
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("TurbineProperties", "WakeSimulation", new { area = "EngineeringTools" })">
+                <i class="icon-cog"></i> Turbine Properties
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Simulation", "WakeSimulation", new { area = "EngineeringTools" })">
+                <i class="icon-play-circle"></i> Simulation
+            </a>
+        </li>
+        <li class="nav-header">Wind Wave Power</li>
+        <li>
+            <a href="@Url.Action("Index", "WindWave", new { area = "EngineeringTools" })">
+                <i class="icon-bolt"></i> Power Calculator
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Results", "EarthElevation", new { area = "EngineeringTools" })">
+                <i class="icon-download"></i>Results
+            </a>
+        </li>
+        <li class="nav-header">Earth Elevation</li>
+        <li>
+            <a href="@Url.Action("Index", "EarthElevation", new { area = "EngineeringTools" })">
+                <i class="icon-globe"></i> World Map
+            </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Results", "EarthElevation", new { area = "EngineeringTools" })">
+                <i class="icon-download"></i>Results
+            </a>
+        </li>
     </ul>
 </div>
