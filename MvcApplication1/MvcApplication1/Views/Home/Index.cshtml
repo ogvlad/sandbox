@@ -8,32 +8,33 @@
         <p>
             This is a start page, where you can choose what to work with.</p>
         <p>
-            <a class="btn btn-primary btn-large">CFD</a>
-            or
             <a class="btn btn-primary btn-large">Engineering Tools</a>
+            or
+            <a class="btn btn-primary btn-large">CFD</a>
         </p>
     </div>
     <div class="row-fluid">
         <div class="span6">
-            <h2>CFD</h2>
+            <h2>Engineering Tools</h2>
+            <p>Here you can start with a number of tools such as:</p>
+            <ul>
+                <li><b>Meso Wind Characterisation</b> (Carlos Silva Santos, SINTEF)</li>
+                <li><b>Wind Wave Power</b> (Ali Al Sam, Lund University)</li>
+                <li><b>Earth Elevation Tool</b> (Thomas Hagelien, SINTEF)</li>
+                <li><b>Wind Wake Simulation</b> (Balram Panjwani & Mihaela Popescu, SINTEF)</li>
+            </ul>
             <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-                commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-            </p>
-            <p>
-                <a class="btn btn-info" href="#">Go to CFD &raquo;</a>
+                <a class="btn btn-info" href="@Url.Action("Index", "EngineeringTools", new { area = "EngineeringTools" })">Go to Engineering Tools &raquo;</a>
             </p>
         </div>
         <div class="span6">
-            <h2>Engineering Tools</h2>
+            <h2>CFD</h2>
             <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-                commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+                With CFD you can utilize big power of OpenFOAM standard solvers and a industry-specific SOWFA product. The simulations are being
+                run at our backend servers in fully parallel mode thus providing optimal performance for most CFD tasks.
             </p>
             <p>
-                <a class="btn btn-info" href="#">Go to Engineering Tools &raquo;</a>
+                <a class="btn btn-info" href="@Url.Action("Index", "CFD", new { area = "CFD" })">Go to CFD &raquo;</a>
             </p>
         </div>
     </div>
