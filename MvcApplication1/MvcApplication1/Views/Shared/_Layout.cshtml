@@ -31,7 +31,8 @@
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                            <li><a href="@Url.Action("Index", "EngineeringTools")">Engineering Tools</a></li>
+                            <li><a href="@Url.Action("Index", "EngineeringTools", new { area = "EngineeringTools" })">Engineering Tools</a></li>
+                            <li><a href="@Url.Action("Index", "CFD", new { area = "CFD" })">CFD</a></li>
                             <li><a href="@Url.Action("Index", "About")">About</a></li>
                         </ul>
                     </div>
@@ -48,7 +49,7 @@
     </div>
     <div id="footer">
       <div class="container">
-        <p class="muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
+        <p class="muted credit">&copy; 2012 <a href="http://offwind.eu" target="_blank">Offwind</a>.</p>
       </div>
     </div>
     @Scripts.Render("~/static/js/jquery-1.7.1.min.js")

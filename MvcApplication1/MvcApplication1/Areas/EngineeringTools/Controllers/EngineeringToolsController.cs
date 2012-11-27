@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcApplication1.Controllers
+namespace MvcApplication1.Areas.EngineeringTools.Controllers
 {
     public class EngineeringToolsController : Controller
     {

@@ -161,9 +161,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\CFD\CFDAreaRegistration.cs" />
+    <Compile Include="Areas\CFD\Controllers\CFDController.cs" />
+    <Compile Include="Areas\EngineeringTools\Controllers\EngineeringToolsController.cs" />
+    <Compile Include="Areas\EngineeringTools\EngineeringToolsAreaRegistration.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EngineeringToolsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -298,6 +301,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\CFD\Models\" />
+    <Folder Include="Areas\EngineeringTools\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -306,12 +311,16 @@
     <Content Include="Views\Shared\Copy of _Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\EngineeringTools\Views\Web.config" />
+    <Content Include="Areas\CFD\Views\Web.config" />
+    <Content Include="Areas\CFD\Views\CFD\Index.cshtml" />
+    <Content Include="Areas\CFD\Views\Shared\__SideNav.cshtml" />
     <None Include="static\font\fontawesome-webfont.eot" />
     <None Include="static\font\fontawesome-webfont.ttf" />
     <None Include="static\font\fontawesome-webfont.woff" />
-    <Content Include="Views\EngineeringTools\Index.cshtml" />
+    <Content Include="Areas\EngineeringTools\Views\EngineeringTools\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
-    <Content Include="Views\Shared\__NavEngineeringTools.cshtml" />
+    <Content Include="Areas\EngineeringTools\Views\Shared\__SideNav.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
