@@ -27,5 +27,10 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         {
             return View();
         }
+
+        public ActionResult Results()
+        {
+            return View();
+        }
     }
 }

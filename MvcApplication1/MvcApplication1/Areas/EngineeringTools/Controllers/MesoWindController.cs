@@ -12,23 +12,33 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         {
             return View();
         }
+
         public ActionResult Database()
         {
             return View();
         }
+
         public ActionResult CurrentData()
         {
             return View();
         }
+        
         public ActionResult VelocityFreq()
         {
             return View();
         }
+
         public ActionResult FreqPerSector()
         {
             return View();
         }
+
         public ActionResult MeanVelocityPerSector()
+        {
+            return View();
+        }
+
+        public ActionResult Results()
         {
             return View();
         }

@@ -26,6 +26,11 @@
                 <i class="icon-asterisk"></i> Mean Velocity per Sector
             </a>
         </li>
+        <li>
+            <a href="@Url.Action("Results", "MesoWind", new { area = "EngineeringTools" })">
+                <i class="icon-download"></i> Results
+            </a>
+        </li>
         <li class="nav-header">Wake Simulation</li>
         <li>
             <a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">
@@ -42,15 +47,20 @@
                 <i class="icon-play-circle"></i> Simulation
             </a>
         </li>
+        <li>
+            <a href="@Url.Action("Results", "WakeSimulation", new { area = "EngineeringTools" })">
+                <i class="icon-download"></i> Results
+            </a>
+        </li>
         <li class="nav-header">Wind Wave Power</li>
         <li>
-            <a href="@Url.Action("Index", "WindWave", new { area = "EngineeringTools" })">
+            <a href="@Url.Action("PowerCalculator", "WindWave", new { area = "EngineeringTools" })">
                 <i class="icon-bolt"></i> Power Calculator
             </a>
         </li>
         <li>
-            <a href="@Url.Action("Results", "EarthElevation", new { area = "EngineeringTools" })">
-                <i class="icon-download"></i>Results
+            <a href="@Url.Action("Results", "WindWave", new { area = "EngineeringTools" })">
+                <i class="icon-download"></i> Results
             </a>
         </li>
         <li class="nav-header">Earth Elevation</li>
@@ -61,7 +71,7 @@
         </li>
         <li>
             <a href="@Url.Action("Results", "EarthElevation", new { area = "EngineeringTools" })">
-                <i class="icon-download"></i>Results
+                <i class="icon-download"></i> Results
             </a>
         </li>
     </ul>
