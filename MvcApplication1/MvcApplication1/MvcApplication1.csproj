@@ -183,6 +183,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="static\css\custom.css" />
+    <Content Include="static\img\marker.png" />
+    <Content Include="static\img\marker-shadow.png" />
     <Content Include="static\js\jquery-1.7.1-vsdoc.js" />
     <Content Include="static\js\jquery-1.7.1.js" />
     <Content Include="static\js\jquery-1.7.1.min.js" />
@@ -256,9 +258,9 @@
     <Content Include="Areas\EngineeringTools\Views\WindWave\Results.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\MesoWind\Results.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\WakeSimulation\Results.cshtml" />
-    <None Include="static\font\fontawesome-webfont.eot" />
-    <None Include="static\font\fontawesome-webfont.ttf" />
-    <None Include="static\font\fontawesome-webfont.woff" />
+    <Content Include="static\font\fontawesome-webfont.eot" />
+    <Content Include="static\font\fontawesome-webfont.ttf" />
+    <Content Include="static\font\fontawesome-webfont.woff" />
     <Content Include="Areas\EngineeringTools\Views\EngineeringTools\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\Shared\__SideNav.cshtml" />
