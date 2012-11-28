@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Device.Location;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -55,6 +56,110 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         {
             Session[CurrentFile] = file;
             return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CurrentDataJson(int sEcho)
+        {
+            if (Session[CurrentFile] == null)
+            {
+                var dataEmpty = new { sEcho = sEcho, iTotalRecords = 0, iTotalDisplayRecords = 0, aaData = new List<decimal[]>() };
+                return Json(dataEmpty, JsonRequestBehavior.AllowGet);
+            }
+
+            var file = (string)Session[CurrentFile];
+            string DbDir = WebConfigurationManager.AppSettings["MesoWindTabDir"];
+            var model = ImportFile(DbDir, file);
+            
+            var final = new List<string[]>();
+            var n = model.NDirs + 1;
+
+            var freqs = new string[n];
+            freqs[0] = "Frequencies";
+            for (var i = 0; i < model.FreqByDirs.Count; i++)
+            {
+                freqs[i + 1] = model.FreqByDirs[i].ToString();
+            }
+            final.Add(freqs);
+
+            for (var bIndex = 0; bIndex < model.FreqByBins.Count; bIndex++)
+            {
+                var bin = model.FreqByBins[bIndex];
+                var binWith13 = new string[n];
+                binWith13[0] = (bIndex + 1).ToString();
+                for (var i = 0; i < bin.Length; i++)
+                {
+                    binWith13[i + 1] = bin[i].ToString();
+                }
+                final.Add(binWith13);
+            }
+
+            // MeanVelocityPerDir
+            model.MeanVelocityPerDir.AddRange(new decimal[model.NDirs]);
+            for (var binIdx = 0; binIdx < model.NBins; binIdx++)
+                for (var dirIdx = 0; dirIdx < model.NDirs; dirIdx++)
+                {
+                    var velocity = binIdx + 1;
+                    model.MeanVelocityPerDir[dirIdx] += (decimal)(velocity * (double)model.FreqByBins[binIdx][dirIdx] / 1000);
+                }
+
+            var mean = new string[n];
+            mean[0] = "Mean Vel.";
+            for (var i = 0; i < model.MeanVelocityPerDir.Count; i++)
+            {
+                mean[i + 1] = model.MeanVelocityPerDir[i].ToString();
+            }
+            final.Add(mean);
+
+            var data = new { sEcho = sEcho, iTotalRecords = model.NBins, iTotalDisplayRecords = model.NBins, aaData = final };
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        private VDataImport ImportFile(string dir, string fileName)
+        {
+            var model = new VDataImport();
+            var path = System.IO.Path.Combine(dir, fileName);
+            using (var f = new StreamReader(path))
+            {
+                var lineN = 0;
+                while (!f.EndOfStream)
+                {
+                    var line = f.ReadLine();
+                    lineN++;
+                    Trace.WriteLine(line);
+                    switch (lineN)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            var line2 = line.Trim().Split("\t ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            model.NBins = ParseInt(line2[2]);
+                            break;
+                        case 3:
+                            var line3 = line.Trim().Split("\t ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            model.NDirs = ParseInt(line3[0]);
+                            break;
+                        case 4:
+                            var line4 = line.Trim().Split("\t ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var s in line4)
+                            {
+                                model.FreqByDirs.Add(ParseDecimal(s));
+                            }
+                            break;
+                        default:
+                            var line5N = line.Trim().Split("\t ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            Debug.Assert(line5N.Length == model.NDirs + 1); // 1st cell contains bin number
+                            var tmp = new decimal[model.NDirs];
+                            for (var i = 0; i < model.NDirs; i++)
+                            {
+                                tmp[i] = ParseDecimal(line5N[i + 1]);
+                            }
+                            model.FreqByBins.Add(tmp);
+                            break;
+                    }
+                }
+            }
+            return model;
         }
 
         public JsonResult GetDatabasePoints(int sEcho, int iDisplayLength, int iDisplayStart)

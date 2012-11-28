@@ -171,6 +171,8 @@
     <Compile Include="Areas\EngineeringTools\Controllers\WindWaveController.cs" />
     <Compile Include="Areas\EngineeringTools\EngineeringToolsAreaRegistration.cs" />
     <Compile Include="Areas\EngineeringTools\Models\DatabaseItem.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\HPoint.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\VDataImport.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
