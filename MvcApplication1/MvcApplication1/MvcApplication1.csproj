@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -169,6 +170,7 @@
     <Compile Include="Areas\EngineeringTools\Controllers\WakeSimulationController.cs" />
     <Compile Include="Areas\EngineeringTools\Controllers\WindWaveController.cs" />
     <Compile Include="Areas\EngineeringTools\EngineeringToolsAreaRegistration.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\DatabaseItem.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -227,7 +229,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\CFD\Models\" />
-    <Folder Include="Areas\EngineeringTools\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

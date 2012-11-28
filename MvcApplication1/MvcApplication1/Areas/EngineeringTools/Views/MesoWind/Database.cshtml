@@ -1,33 +1,39 @@
-﻿<div class="span3">
+﻿@section styles
+{
+    @*<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">*@
+    <style>
+    </style>
+}
+<div class="span3">
     @Html.Partial("__SideNav")
 </div>
-<div class="span9">
-    <div id="map_canvas" style="width: 640px; height: 480px;">map div</div>
+<div class="span6">
+    <div class="well well-small">
+        <div id="map_canvas" style="width: auto; height: 480px;">
+            map div</div>
+    </div>
 </div>
-
+<div class="span3">
+    <div class="well well-small" style="background-color: white;">
+    <table id="database" class="table table-condensed table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Lat. (&#176;)</th>
+                <th>Lng. (&#176;)</th>
+            </tr>
+        </thead>
+    </table>
+    </div>
+</div>
 @section scripts
 {
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    @Scripts.Render("~/static/js/jquery.dataTables.Pagination.js")
     <script>
-
-        function CoordMapType(tileSize) {
-            this.tileSize = tileSize;
-        }
-
-        CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-            var div = ownerDocument.createElement('div');
-            div.innerHTML = coord;
-            div.style.width = this.tileSize.width + 'px';
-            div.style.height = this.tileSize.height + 'px';
-            div.style.fontSize = '10';
-            div.style.borderStyle = 'solid';
-            div.style.borderWidth = '1px';
-            div.style.borderColor = '#AAAAAA';
-            return div;
-        };
-
         var map;
-        var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+        var centerPoint = new google.maps.LatLng(11, 50);
+        var dburl = "@Url.Action("GetDatabasePoints", "MesoWind", new { are = "EngineeringTools" })";
 
         var image = new google.maps.MarkerImage(
                     '@Url.Content("~/static/img/marker.png")',
@@ -60,34 +66,58 @@
             13, 19, 12, 19, 11, 20, 10, 20, 9, 20, 8, 18, 7, 20, 6, 20, 5,
             20, 4, 20, 3, 20, 2, 20, 1, 21, 0, 22, 0], type: 'poly' };
 
-        function initialize() {
-            var mapOptions = {
-                zoom: 10,
-                center: chicago,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById('map_canvas'),
-                mapOptions);
-                
+        function createMarker(lat, lng) {
             var marker = new google.maps.Marker({
-                position: chicago,
+                position: centerPoint,
                 draggable: true,
                 raiseOnDrag: false,
-                icon: image,
-                shadow: shadow,
-                shape: shape,
+                //icon: image,
+                //shadow: shadow,
+                //shape: shape,
                 title: 'Sample',
                 map: map
             });
-            // Insert this overlay map type as the first overlay map type at
-            // position 0. Note that all overlay map types appear on top of
-            // their parent base map.
-            map.overlayMapTypes.insertAt(
-                0, new CoordMapType(new google.maps.Size(256, 256)));
-
+        }
+        function initialize() {
+            var mapOptions = {
+                zoom: 1,
+                center: centerPoint,
+                mapTypeId: google.maps.MapTypeId.SATELLITE
+            };
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            google.maps.event.addListener(map, "rightclick", function(event) {
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                // populate yor box/field with lat, lng
+                //alert("Lat=" + lat + "; Lng=" + lng);
+                //$.getJSON(dburl, {lat: lat, lng: lng}, function (data) {
+                    //console.debug(data);
+                    //$(data).each(function(value) {
+                        //createMarker()
+                    //});
+                //});
+            });
         }
         $(document).ready(function () {
             initialize();
+            
+            $.extend( $.fn.dataTableExt.oStdClasses, {
+                "sSortAsc": "header headerSortDown",
+                "sSortDesc": "header headerSortUp",
+                "sSortable": "header"
+            });
+            $('#database').dataTable( {
+		        //"sDom": "<'row-fluid'<'span3'T><'span3'f>r>t<'row-fluid'<'span3'i><'span3'p>>",
+		        "sDom": "tip<'row-fluid'r>",
+                //"sDom": "lfrtip",
+		        "bFilter": false,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": dburl,
+		        //"sPaginationType": "full_numbers"
+                "sPaginationType": "bootstrap"
+                //"iDeferLoading": 7030
+            });
         });
     </script>
 }
