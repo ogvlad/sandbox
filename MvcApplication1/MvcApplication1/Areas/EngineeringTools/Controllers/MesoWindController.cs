@@ -8,7 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using MvcApplication1.Areas.EngineeringTools.Models;
+using MvcApplication1.Areas.EngineeringTools.Models.MesoWind;
 
 namespace MvcApplication1.Areas.EngineeringTools.Controllers
 {
@@ -39,7 +41,31 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult WindRose()
         {
-            return View();
+            var model = new VWindRose();
+            if (Session[CurrentFile] == null)
+            {
+                return View(model);
+            }
+
+            var file = (string)Session[CurrentFile];
+            string DbDir = WebConfigurationManager.AppSettings["MesoWindTabDir"];
+            var imported = ImportFile(DbDir, file);
+
+            for (var i = 0; i < imported.FreqByDirs.Count; i++)
+            {
+                var freq = imported.FreqByDirs[i];
+                var dir = i * 360 / imported.NDirs;
+                model.FreqByDirs.Add(new HPoint(dir, 0, freq));
+            }
+
+            for (var i = 0; i < imported.MeanVelocityPerDir.Count; i++)
+            {
+                var vel = imported.MeanVelocityPerDir[i];
+                var dir = i * 360/imported.NDirs;
+                model.MeanVelocityPerDir.Add(new HPoint(dir, vel, 0));
+            }
+
+            return View(model);
         }
 
         public ActionResult Results()
@@ -63,22 +89,22 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
             var file = (string)Session[CurrentFile];
             string DbDir = WebConfigurationManager.AppSettings["MesoWindTabDir"];
-            var model = ImportFile(DbDir, file);
+            var imported = ImportFile(DbDir, file);
             
             var final = new List<string[]>();
-            var n = model.NDirs + 1;
+            var n = imported.NDirs + 1;
 
             var freqs = new string[n];
             freqs[0] = "Frequencies";
-            for (var i = 0; i < model.FreqByDirs.Count; i++)
+            for (var i = 0; i < imported.FreqByDirs.Count; i++)
             {
-                freqs[i + 1] = model.FreqByDirs[i].ToString();
+                freqs[i + 1] = imported.FreqByDirs[i].ToString();
             }
             final.Add(freqs);
 
-            for (var bIndex = 0; bIndex < model.FreqByBins.Count; bIndex++)
+            for (var bIndex = 0; bIndex < imported.FreqByBins.Count; bIndex++)
             {
-                var bin = model.FreqByBins[bIndex];
+                var bin = imported.FreqByBins[bIndex];
                 var binWith13 = new string[n];
                 binWith13[0] = (bIndex + 1).ToString();
                 for (var i = 0; i < bin.Length; i++)
@@ -88,24 +114,15 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
                 final.Add(binWith13);
             }
 
-            // MeanVelocityPerDir
-            model.MeanVelocityPerDir.AddRange(new decimal[model.NDirs]);
-            for (var binIdx = 0; binIdx < model.NBins; binIdx++)
-                for (var dirIdx = 0; dirIdx < model.NDirs; dirIdx++)
-                {
-                    var velocity = binIdx + 1;
-                    model.MeanVelocityPerDir[dirIdx] += (decimal)(velocity * (double)model.FreqByBins[binIdx][dirIdx] / 1000);
-                }
-
             var mean = new string[n];
             mean[0] = "Mean Vel.";
-            for (var i = 0; i < model.MeanVelocityPerDir.Count; i++)
+            for (var i = 0; i < imported.MeanVelocityPerDir.Count; i++)
             {
-                mean[i + 1] = model.MeanVelocityPerDir[i].ToString();
+                mean[i + 1] = imported.MeanVelocityPerDir[i].ToString();
             }
             final.Add(mean);
 
-            var data = new { sEcho = sEcho, iTotalRecords = model.NBins, iTotalDisplayRecords = model.NBins, aaData = final };
+            var data = new { sEcho = sEcho, iTotalRecords = imported.NBins, iTotalDisplayRecords = imported.NBins, aaData = final };
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -154,6 +171,16 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
                     }
                 }
             }
+
+            // MeanVelocityPerDir
+            model.MeanVelocityPerDir.AddRange(new decimal[model.NDirs]);
+            for (var binIdx = 0; binIdx < model.NBins; binIdx++)
+                for (var dirIdx = 0; dirIdx < model.NDirs; dirIdx++)
+                {
+                    var velocity = binIdx + 1;
+                    model.MeanVelocityPerDir[dirIdx] += (decimal)(velocity * (double)model.FreqByBins[binIdx][dirIdx] / 1000);
+                }
+
             return model;
         }
 
