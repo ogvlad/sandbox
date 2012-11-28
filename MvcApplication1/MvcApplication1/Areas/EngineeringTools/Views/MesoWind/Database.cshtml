@@ -15,14 +15,26 @@
 </div>
 <div class="span3">
     <div class="well well-small" style="background-color: white;">
-    <table id="database" class="table table-condensed table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>Lat. (&#176;)</th>
-                <th>Lng. (&#176;)</th>
-            </tr>
-        </thead>
-    </table>
+        <div class="row-fluid">
+            <div class="span11" style="margin-bottom: 1em;">
+                <a class="btn btn-info pull-right" href="#" id="button-import-selected">Import Selected</a>
+            </div>
+            <div class="span11">
+                <table id="database" class="table table-condensed table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Lat. (&#176;)
+                            </th>
+                            <th>
+                                Lng. (&#176;)
+                            </th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 @section scripts
@@ -32,6 +44,7 @@
     @Scripts.Render("~/static/js/jquery.dataTables.Pagination.js")
     <script>
         var map;
+        var dbTable;
         var centerPoint = new google.maps.LatLng(11, 50);
         var dburl = "@Url.Action("GetDatabasePoints", "MesoWind", new { are = "EngineeringTools" })";
 
@@ -98,6 +111,23 @@
                 //});
             });
         }
+        
+        /* Get the rows which are currently selected */
+        function fnGetSelected(oTableLocal)
+        {
+	        var aReturn = new Array();
+	        var aTrs = oTableLocal.fnGetNodes();
+	
+	        for ( var i=0 ; i<aTrs.length ; i++ )
+	        {
+		        if ( $(aTrs[i]).hasClass('table-row-selected') )
+		        {
+			        aReturn.push( aTrs[i] );
+		        }
+	        }
+	        return aReturn;
+        }
+
         $(document).ready(function () {
             initialize();
             
@@ -106,7 +136,7 @@
                 "sSortDesc": "header headerSortUp",
                 "sSortable": "header"
             });
-            $('#database').dataTable( {
+            dbTable = $('#database').dataTable( {
 		        //"sDom": "<'row-fluid'<'span3'T><'span3'f>r>t<'row-fluid'<'span3'i><'span3'p>>",
 		        "sDom": "tip<'row-fluid'r>",
                 //"sDom": "lfrtip",
@@ -117,6 +147,19 @@
 		        //"sPaginationType": "full_numbers"
                 "sPaginationType": "bootstrap"
                 //"iDeferLoading": 7030
+            });
+	        $("#database tbody").click(function(event) {
+		        $(dbTable.fnSettings().aoData).each(function (){
+			        $(this.nTr).removeClass('table-row-selected');
+		        });
+	            console.debug($(event.target.parentNode));
+		        $(event.target.parentNode).addClass('table-row-selected');
+	        });
+            $("#button-import-selected").click(function() {
+                var anSelected = fnGetSelected(dbTable);
+                console.debug(anSelected);
+                //dbTable.fnDeleteRow(anSelected[0]);
+                return false;
             });
         });
     </script>
