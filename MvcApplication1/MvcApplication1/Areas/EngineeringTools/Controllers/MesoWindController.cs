@@ -13,6 +13,9 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 {
     public class MesoWindController : Controller
     {
+        private static readonly List<DatabaseItem> _items = new List<DatabaseItem>();
+        private const string CurrentFile = "CurrentFile";
+
         public ActionResult Index()
         {
             return View();
@@ -48,7 +51,11 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             return View();
         }
 
-        private static readonly List<DatabaseItem> _items = new List<DatabaseItem>();
+        public JsonResult Import(string file)
+        {
+            Session[CurrentFile] = file;
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetDatabasePoints(int sEcho, int iDisplayLength, int iDisplayStart)
         {
