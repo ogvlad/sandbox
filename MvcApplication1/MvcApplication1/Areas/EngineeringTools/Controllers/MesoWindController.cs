@@ -36,7 +36,16 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         
         public ActionResult VelocityFreq()
         {
-            return View();
+            var model = new List<HPoint>();
+            if (Session[CurrentFile] == null)
+            {
+                return View(model);
+            }
+
+            var file = (string)Session[CurrentFile];
+            string DbDir = WebConfigurationManager.AppSettings["MesoWindTabDir"];
+            var imported = ImportFile(DbDir, file);
+            return View(imported.VelocityFreq);
         }
 
         public ActionResult WindRose()
@@ -181,6 +190,17 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
                     model.MeanVelocityPerDir[dirIdx] += (decimal)(velocity * (double)model.FreqByBins[binIdx][dirIdx] / 1000);
                 }
 
+            // Velocity frequencies
+            model.VelocityFreq.Clear();
+            for (int binIdx = 0; binIdx < model.NBins; binIdx++)
+            {
+                decimal freq = 0;
+                for (int dirIdx = 0; dirIdx < model.NDirs; dirIdx++)
+                {
+                    freq += model.FreqByBins[binIdx][dirIdx] / 1000 * model.FreqByDirs[dirIdx];
+                }
+                model.VelocityFreq.Add(new HPoint(binIdx, 0, freq));
+            }
             return model;
         }
 

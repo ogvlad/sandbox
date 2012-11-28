@@ -190,6 +190,7 @@
     <Content Include="static\css\custom.css" />
     <Content Include="static\img\marker.png" />
     <Content Include="static\img\marker-shadow.png" />
+    <Content Include="static\js\amcharts.js" />
     <Content Include="static\js\d3.v2.js" />
     <Content Include="static\js\d3.v2.min.js" />
     <Content Include="static\js\jquery-1.7.1-vsdoc.js" />
