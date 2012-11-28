@@ -189,6 +189,8 @@
     <Content Include="static\css\custom.css" />
     <Content Include="static\img\marker.png" />
     <Content Include="static\img\marker-shadow.png" />
+    <Content Include="static\js\d3.v2.js" />
+    <Content Include="static\js\d3.v2.min.js" />
     <Content Include="static\js\jquery-1.7.1-vsdoc.js" />
     <Content Include="static\js\jquery-1.7.1.js" />
     <Content Include="static\js\jquery-1.7.1.min.js" />
@@ -206,6 +208,8 @@
     <Content Include="static\js\jquery.dataTables.js" />
     <Content Include="static\js\jquery.dataTables.min.js" />
     <Content Include="static\js\jquery.dataTables.Pagination.js" />
+    <Content Include="static\js\protovis.js" />
+    <Content Include="static\js\protovis.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -253,8 +257,7 @@
     <Content Include="Areas\EngineeringTools\Views\MesoWind\Database.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\MesoWind\CurrentData.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\MesoWind\VelocityFreq.cshtml" />
-    <Content Include="Areas\EngineeringTools\Views\MesoWind\FreqPerSector.cshtml" />
-    <Content Include="Areas\EngineeringTools\Views\MesoWind\MeanVelocityPerSector.cshtml" />
+    <Content Include="Areas\EngineeringTools\Views\MesoWind\WindRose.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\WindWave\Index.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\WindWave\PowerCalculator.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\WakeSimulation\Index.cshtml" />

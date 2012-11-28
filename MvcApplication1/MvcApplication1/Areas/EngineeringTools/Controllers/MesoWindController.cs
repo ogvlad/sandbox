@@ -37,12 +37,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             return View();
         }
 
-        public ActionResult FreqPerSector()
-        {
-            return View();
-        }
-
-        public ActionResult MeanVelocityPerSector()
+        public ActionResult WindRose()
         {
             return View();
         }
