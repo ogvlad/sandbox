@@ -26,16 +26,19 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult Database()
         {
+            ViewBag.Title = "Database | Mesoscale Wind Characteristics | Offwind";
             return View();
         }
 
         public ActionResult CurrentData()
         {
+            ViewBag.Title = "Current Data | Mesoscale Wind Characteristics - Offwind";
             return View();
         }
         
         public ActionResult VelocityFreq()
         {
+            ViewBag.Title = "Histogram | Mesoscale Wind Characteristics | Offwind";
             var model = new List<HPoint>();
             if (Session[CurrentFile] == null)
             {
@@ -50,6 +53,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult WindRose()
         {
+            ViewBag.Title = "Wind Roses | Mesoscale Wind Characteristics | Offwind";
             var model = new VWindRose();
             if (Session[CurrentFile] == null)
             {
