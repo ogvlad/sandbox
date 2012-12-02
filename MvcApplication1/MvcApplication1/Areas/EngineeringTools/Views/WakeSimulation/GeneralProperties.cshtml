@@ -1,43 +1,61 @@
-﻿<div class="span3">
+﻿@using MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
+@model VWakeSimulation
+<div class="span3">
     @Html.Partial("__SideNav")
 </div>
 <div class="span9">
-        <script>
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Home", new { area = "" })"><i class="icon-home"></i></a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("Index", "EngineeringTools", new { area = "EngineeringTools" })">Engineering Tools</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">Wake Simulation</a> <span class="divider">/</span></li>
+        <li class="active">General Properties</li>
+    </ul>
+    <div id="alert-saved"  class="alert alert-success hidden" style="width: 10%">
+        <a class="close" data-dismiss="alert">×</a>
+        Saved
+    </div>
+    <form class="form-horizontal" method="post">
+        <fieldset>
 
-            function CoordMapType(tileSize) {
-                this.tileSize = tileSize;
-            }
+            @Html.EditorFor(m => m.GridPointsX)
+            @Html.EditorFor(m => m.GridPointsY)
+            @Html.EditorFor(m => m.TurbineDiameter)
+            @Html.EditorFor(m => m.TurbineHeight)
+            @Html.EditorFor(m => m.TurbineThrust)
+            @Html.EditorFor(m => m.WakeDecay)
+            @Html.EditorFor(m => m.VelocityAtHub)
+            @Html.EditorFor(m => m.TurbinesAmount)
+            @Html.EditorFor(m => m.AirDensity)
+            @Html.EditorFor(m => m.PowerDistance)
+            @Html.EditorFor(m => m.RotationAngle)
 
-            CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-                var div = ownerDocument.createElement('div');
-                div.innerHTML = coord;
-                div.style.width = this.tileSize.width + 'px';
-                div.style.height = this.tileSize.height + 'px';
-                div.style.fontSize = '10';
-                div.style.borderStyle = 'solid';
-                div.style.borderWidth = '1px';
-                div.style.borderColor = '#AAAAAA';
-                return div;
-            };
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn">Cancel</button>
+            </div>
 
-            var map;
-            var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-
-            function initialize() {
-                var mapOptions = {
-                    zoom: 10,
-                    center: chicago,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                map = new google.maps.Map(document.getElementById('map_canvas'),
-                                          mapOptions);
-
-                // Insert this overlay map type as the first overlay map type at
-                // position 0. Note that all overlay map types appear on top of
-                // their parent base map.
-                map.overlayMapTypes.insertAt(
-            0, new CoordMapType(new google.maps.Size(256, 256)));
-            }
-    </script>
-    <div id="map_canvas" style="width: 640px; height: 480px;">map div</div>
+        </fieldset>
+    </form>
 </div>
+@section scripts
+{
+    @Scripts.Render("~/static/js/jquery.form.js")
+    @Scripts.Render("~/static/js/jquery.inputmask/jquery.inputmask.js")
+    @Scripts.Render("~/static/js/jquery.inputmask/jquery.inputmask.numeric.extensions.js")
+    <script language="javascript">
+        $(document).ready(function () {
+            $('.inputmask.decimal').inputmask("decimal");
+            $('.inputmask.integer').inputmask("integer");
+            $('form').ajaxForm(function () {
+                $('#alert-saved').removeClass('hidden').hide().fadeIn();
+                //$('#alert-saved').removeClass('hidden').hide().fadeIn();
+                //$('#alert-saved').addClass('in');
+                //$('#alert-saved').fadeIn('slow');
+            });
+            $('#alert-saved').bind('close', function () {
+                $('#alert-saved').fadeOut();
+                return false;
+            });
+        });        
+    </script>
+}

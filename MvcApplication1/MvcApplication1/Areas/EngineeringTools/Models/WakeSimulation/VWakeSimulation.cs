@@ -10,15 +10,15 @@ namespace MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
 
         public string SolverOutputDir { get; set; }
 
-        public decimal GridPointsX { get; set; }
+        public int GridPointsX { get; set; }
         
-        public decimal GridPointsY { get; set; }
+        public int GridPointsY { get; set; }
 
         public decimal TurbineDiameter { get; set; }
 
         public decimal TurbineHeight { get; set; }
 
-        public decimal HubThrust { get; set; }
+        public decimal TurbineThrust { get; set; }
 
         public decimal WakeDecay { get; set; }
 
@@ -28,7 +28,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
        
         public decimal AirDensity { get; set; }
 
-        public decimal UnknownProperty { get; set; }
+        public decimal PowerDistance { get; set; }
        
         public decimal RotationAngle { get; set; }
 

@@ -1,43 +1,62 @@
-﻿<div class="span3">
+﻿@section styles
+{
+    @Styles.Render("~/static/css/jquery.handsontable.full.css")
+}
+<div class="span3">
     @Html.Partial("__SideNav")
 </div>
 <div class="span9">
-        <script>
+    <ul class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Home", new { area = "" })"><i class="icon-home"></i></a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("Index", "EngineeringTools", new { area = "EngineeringTools" })">Engineering Tools</a> <span class="divider">/</span></li>
+        <li><a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">Wake Simulation</a> <span class="divider">/</span></li>
+        <li class="active">Turbine Properties</li>
+    </ul>
+    <div id="example1"></div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/static/js/jquery.handsontable.full.js")
+    <script language="javascript">
+        $(document).ready(function () {
+            var renderer = function (instance, td) {
+                Handsontable.TextCell.renderer.apply(this, arguments);
+                $(td).css({ textAlign: "right" });
+                return td;
+            };
+            var isInitialized = false;
+            var $container = $("#example1");
 
-            function CoordMapType(tileSize) {
-                this.tileSize = tileSize;
-            }
-
-            CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-                var div = ownerDocument.createElement('div');
-                div.innerHTML = coord;
-                div.style.width = this.tileSize.width + 'px';
-                div.style.height = this.tileSize.height + 'px';
-                div.style.fontSize = '10';
-                div.style.borderStyle = 'solid';
-                div.style.borderWidth = '1px';
-                div.style.borderColor = '#AAAAAA';
-                return div;
+            var changed = function(change, source) {
+                if (!isInitialized) return;
+                var d = $container.data('handsontable').getData();
+                $.ajax({
+                    url: "@Url.Action("TurbinePropertiesSave", "WakeSimulation", new { area = "EngineeringTools" })",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(d)
+                });
             };
 
-            var map;
-            var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+            $container.handsontable({
+                startRows: 5,
+                startCols: 2,
+                columns: [{ type: { renderer: renderer} }, { type: { renderer: renderer} }],
+                colHeaders: ["<b>X</b>", "<b>Y</b>"],
+                minSpareRows: 1,
+                onChange: changed
+            });
 
-            function initialize() {
-                var mapOptions = {
-                    zoom: 10,
-                    center: chicago,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                map = new google.maps.Map(document.getElementById('map_canvas'),
-                                          mapOptions);
-
-                // Insert this overlay map type as the first overlay map type at
-                // position 0. Note that all overlay map types appear on top of
-                // their parent base map.
-                map.overlayMapTypes.insertAt(
-            0, new CoordMapType(new google.maps.Size(256, 256)));
-            }
+            $.ajax({
+                url: "@Url.Action("TurbinePropertiesData", "WakeSimulation", new { area = "EngineeringTools" })",
+                dataType: 'json',
+                type: 'GET',
+                success: function (res) {
+                    $container.data('handsontable').loadData(res);
+                    isInitialized = true;
+                }
+            });
+        });        
     </script>
-    <div id="map_canvas" style="width: 640px; height: 480px;">map div</div>
-</div>
+}

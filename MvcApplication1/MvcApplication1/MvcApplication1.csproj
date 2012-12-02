@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\libs\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -174,6 +177,8 @@
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\HPoint.cs" />
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\VDataImport.cs" />
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\VWindRose.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VTurbine.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VWakeSimulation.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -182,6 +187,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Helper.cs" />
+    <Compile Include="Infrastructure\SharpZipUtils.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -189,9 +195,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="static\css\custom.css" />
+    <Content Include="static\css\jquery.handsontable.full.css" />
     <Content Include="static\img\marker.png" />
     <Content Include="static\img\marker-shadow.png" />
     <Content Include="static\js\amcharts.js" />
+    <Content Include="static\js\jquery.handsontable.full.js" />
+    <Content Include="static\js\jquery.form.js" />
     <Content Include="static\js\d3.v2.js" />
     <Content Include="static\js\d3.v2.min.js" />
     <Content Include="static\js\jquery-1.7.1-vsdoc.js" />
@@ -211,6 +220,8 @@
     <Content Include="static\js\jquery.dataTables.js" />
     <Content Include="static\js\jquery.dataTables.min.js" />
     <Content Include="static\js\jquery.dataTables.Pagination.js" />
+    <Content Include="static\js\jquery.inputmask\jquery.inputmask.js" />
+    <Content Include="static\js\jquery.inputmask\jquery.inputmask.numeric.extensions.js" />
     <Content Include="static\js\protovis.js" />
     <Content Include="static\js\protovis.min.js" />
     <Content Include="Web.config" />
@@ -276,6 +287,18 @@
     <Content Include="Areas\EngineeringTools\Views\EngineeringTools\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\Shared\__SideNav.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Int32.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\offwind.wake\csharp\WakeCode\WakeCode.csproj">
+      <Project>{E37CB3E6-1575-4241-BEC6-86E2650ECAED}</Project>
+      <Name>WakeCode</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
