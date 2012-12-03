@@ -177,8 +177,9 @@
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\HPoint.cs" />
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\VDataImport.cs" />
     <Compile Include="Areas\EngineeringTools\Models\MesoWind\VWindRose.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VGeneralProperties.cs" />
     <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VTurbine.cs" />
-    <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VWakeSimulation.cs" />
+    <Compile Include="Areas\EngineeringTools\Models\WakeSimulation\VTurbineProperties.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

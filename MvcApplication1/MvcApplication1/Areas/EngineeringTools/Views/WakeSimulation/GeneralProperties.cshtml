@@ -1,5 +1,5 @@
 ﻿@using MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
-@model VWakeSimulation
+@model VGeneralProperties
 <div class="span3">
     @Html.Partial("__SideNav")
 </div>
@@ -24,7 +24,6 @@
             @Html.EditorFor(m => m.TurbineThrust)
             @Html.EditorFor(m => m.WakeDecay)
             @Html.EditorFor(m => m.VelocityAtHub)
-            @Html.EditorFor(m => m.TurbinesAmount)
             @Html.EditorFor(m => m.AirDensity)
             @Html.EditorFor(m => m.PowerDistance)
             @Html.EditorFor(m => m.RotationAngle)

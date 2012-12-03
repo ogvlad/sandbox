@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
+﻿namespace MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
 {
-    public class VWakeSimulation
+    public class VGeneralProperties
     {
-        public List<VTurbine> Turbines { get; set; }
-
         public string SolverState { get; set; }
 
         public string SolverOutputDir { get; set; }
@@ -24,17 +20,10 @@ namespace MvcApplication1.Areas.EngineeringTools.Models.WakeSimulation
 
         public decimal VelocityAtHub { get; set; }
 
-        public int TurbinesAmount { get; set; }
-       
         public decimal AirDensity { get; set; }
 
         public decimal PowerDistance { get; set; }
        
         public decimal RotationAngle { get; set; }
-
-        public VWakeSimulation()
-        {
-            Turbines = new List<VTurbine>();
-        }
     }
 }

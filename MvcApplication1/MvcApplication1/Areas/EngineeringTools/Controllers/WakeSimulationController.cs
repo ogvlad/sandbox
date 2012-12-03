@@ -20,13 +20,13 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         public ActionResult GeneralProperties()
         {
             ViewBag.Title = "General Properties | WakeSim | Offwind";
-            var model = GetModel();
+            var model = GetModelGeneral();
             return View(model);
         }
 
         [ActionName("GeneralProperties")]
         [HttpPost]
-        public ActionResult GeneralPropertiesSave(VWakeSimulation model)
+        public ActionResult GeneralPropertiesSave(VGeneralProperties model)
         {
             if (ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public JsonResult TurbinePropertiesData()
         {
-            var model = GetModel();
+            var model = GetModelTurbines();
             var arr = model.Turbines.Select(t => new[] {t.X, t.Y}).ToArray();
             return Json(arr, JsonRequestBehavior.AllowGet);
         }
@@ -54,7 +54,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         public JsonResult TurbinePropertiesSave(List<decimal[]> turbines)
         {
             if (turbines == null) return Json("Bad model");
-            var model = GetModel();
+            var model = GetModelTurbines();
             turbines.RemoveAt(turbines.Count - 1);
             model.Turbines.Clear();
             model.Turbines.AddRange(turbines.Select(t => new VTurbine(t[0], t[1])));
@@ -72,7 +72,8 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
         {
             var randomDir = Guid.NewGuid().ToString();
             Session["WakeSimDir"] = randomDir;
-            var model = GetModel();
+            var modelGeneral = GetModelGeneral();
+            var modelTurbines = GetModelTurbines();
             string dir = WebConfigurationManager.AppSettings["WakeSimulationDir"];
             dir = Path.Combine(dir, randomDir); // root temp dir
             Directory.CreateDirectory(dir);
@@ -84,26 +85,26 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             var generalData = new GeneralData();
             var dataWriter = new DataWriter();
             var calc = new WakeCalc();
-            
-            generalData.GridPointsX = model.GridPointsX;
-            generalData.GridPointsY = model.GridPointsY;
-            generalData.TurbinesAmount = model.Turbines.Count;
-            generalData.RotationAngle = (double)model.RotationAngle;
-            generalData.x_turb = new double[model.Turbines.Count];
-            generalData.y_turb = new double[model.Turbines.Count];
-            for (var i = 0; i < model.Turbines.Count; i++)
+
+            generalData.GridPointsX = modelGeneral.GridPointsX;
+            generalData.GridPointsY = modelGeneral.GridPointsY;
+            generalData.TurbinesAmount = modelTurbines.Turbines.Count;
+            generalData.RotationAngle = (double)modelGeneral.RotationAngle;
+            generalData.x_turb = new double[modelTurbines.Turbines.Count];
+            generalData.y_turb = new double[modelTurbines.Turbines.Count];
+            for (var i = 0; i < modelTurbines.Turbines.Count; i++)
             {
-                var t = model.Turbines[i];
+                var t = modelTurbines.Turbines[i];
                 generalData.x_turb[i] = (double) t.X;
                 generalData.y_turb[i] = (double) t.Y;
             }
-            generalData.TurbineDiameter = (double)model.TurbineDiameter;
-            generalData.TurbineHeight = (double)model.TurbineHeight;
-            generalData.TurbineThrust = (double)model.TurbineThrust;
-            generalData.WakeDecay = (double)model.WakeDecay;
-            generalData.VelocityAtHub = (double)model.VelocityAtHub;
-            generalData.AirDensity = (double)model.AirDensity;
-            generalData.PowerDistance = (double)model.PowerDistance;
+            generalData.TurbineDiameter = (double)modelGeneral.TurbineDiameter;
+            generalData.TurbineHeight = (double)modelGeneral.TurbineHeight;
+            generalData.TurbineThrust = (double)modelGeneral.TurbineThrust;
+            generalData.WakeDecay = (double)modelGeneral.WakeDecay;
+            generalData.VelocityAtHub = (double)modelGeneral.VelocityAtHub;
+            generalData.AirDensity = (double)modelGeneral.AirDensity;
+            generalData.PowerDistance = (double)modelGeneral.PowerDistance;
 
             calc.Initialize(generalData, calcData);
             calc.Run(generalData, calcData);
@@ -139,23 +140,39 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             return View();
         }
 
-        private VWakeSimulation GetModel()
+        private VGeneralProperties GetModelGeneral()
         {
-            VWakeSimulation model = null;
+            VGeneralProperties model = null;
             if (Session["GeneralProperties"] != null)
             {
-                model = Session["GeneralProperties"] as VWakeSimulation;
+                model = Session["GeneralProperties"] as VGeneralProperties;
             }
             if (model == null)
             {
-                model = new VWakeSimulation();
+                model = new VGeneralProperties();
                 InitGeneralProperties(model);
                 Session["GeneralProperties"] = model;
             }
             return model;
         }
 
-        private void InitGeneralProperties(VWakeSimulation m)
+        private VTurbineProperties GetModelTurbines()
+        {
+            VTurbineProperties model = null;
+            if (Session["TurbineProperties"] != null)
+            {
+                model = Session["TurbineProperties"] as VTurbineProperties;
+            }
+            if (model == null)
+            {
+                model = new VTurbineProperties();
+                InitTurbuneProperties(model);
+                Session["TurbineProperties"] = model;
+            }
+            return model;
+        }
+
+        private void InitGeneralProperties(VGeneralProperties m)
         {
             m.GridPointsX = 1000;
             m.GridPointsY = 1000;
@@ -167,7 +184,10 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             m.AirDensity = 1.225m;
             m.PowerDistance = 0.2m;
             m.RotationAngle = -48.4m;
+        }
 
+        private void InitTurbuneProperties(VTurbineProperties m)
+        {
             m.Turbines.AddRange(new[]
                              {
                                  new VTurbine(3396.91m, 2696.66m),
@@ -220,6 +240,5 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
                                  new VTurbine(750.0m, 2859.74m),
                              });
         }
-
     }
 }
