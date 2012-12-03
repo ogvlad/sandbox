@@ -197,6 +197,7 @@
     <Content Include="Global.asax" />
     <Content Include="static\css\custom.css" />
     <Content Include="static\css\jquery.handsontable.full.css" />
+    <Content Include="static\img\ajax-loader.gif" />
     <Content Include="static\img\marker.png" />
     <Content Include="static\img\marker-shadow.png" />
     <Content Include="static\js\amcharts.js" />
