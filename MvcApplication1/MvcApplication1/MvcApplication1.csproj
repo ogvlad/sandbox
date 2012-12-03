@@ -224,6 +224,9 @@
     <Content Include="static\js\jquery.inputmask\jquery.inputmask.numeric.extensions.js" />
     <Content Include="static\js\protovis.js" />
     <Content Include="static\js\protovis.min.js" />
+    <Content Include="static\wake-sim\linux.png" />
+    <Content Include="static\wake-sim\win-1.png" />
+    <Content Include="static\wake-sim\win-2.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -280,7 +283,7 @@
     <Content Include="Areas\EngineeringTools\Views\WakeSimulation\TurbineProperties.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\WindWave\Results.cshtml" />
     <Content Include="Areas\EngineeringTools\Views\MesoWind\Results.cshtml" />
-    <Content Include="Areas\EngineeringTools\Views\WakeSimulation\Results.cshtml" />
+    <Content Include="Areas\EngineeringTools\Views\WakeSimulation\PostProcessing.cshtml" />
     <Content Include="static\font\fontawesome-webfont.eot" />
     <Content Include="static\font\fontawesome-webfont.ttf" />
     <Content Include="static\font\fontawesome-webfont.woff" />

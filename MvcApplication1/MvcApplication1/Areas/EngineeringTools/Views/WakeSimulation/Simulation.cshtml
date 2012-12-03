@@ -8,15 +8,18 @@
         <li><a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">Wake Simulation</a> <span class="divider">/</span></li>
         <li class="active">Simulation</li>
     </ul>
-    <div class="row-fluid">
-        <div class="span3">
-            <a class="btn btn-info btn-large" href="#" id="button-run">Run simulation</a>
-        </div>
-        <div class="span3">
-            <a class="btn btn-success btn-large disabled" id="download-link" href="@Url.Action("DownloadResult", "WakeSimulation", new { area = "EngineeringTools" })">Download result</a>
-        </div>
-    </div>
-    
+    <h3>Simulation</h3>
+    <p>Now, you are ready to start simulation process. It usually takes 10-30 seconds.
+        Just push <b>"Start simulation"</b> button and wait. When it finishes another button <b>"Download result"</b>
+        will be activated.
+    </p>
+
+    <p><a class="btn btn-primary btn-large" href="#" id="button-run">Run simulation</a></p>
+
+    <p>
+        To download result click button below. It is a <b>zip-archive</b> (~5 Mbytes). Save it on your local disk and unpack.
+    </p>
+    <p><a class="btn btn-success btn-large disabled" id="download-link" href="@Url.Action("DownloadResult", "WakeSimulation", new { area = "EngineeringTools" })">Download result</a></p>
 </div>
 @section scripts
 {

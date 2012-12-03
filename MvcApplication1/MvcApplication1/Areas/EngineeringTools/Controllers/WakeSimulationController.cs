@@ -19,6 +19,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult GeneralProperties()
         {
+            ViewBag.Title = "General Properties | WakeSim | Offwind";
             var model = GetModel();
             return View(model);
         }
@@ -39,6 +40,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult TurbineProperties()
         {
+            ViewBag.Title = "Turbine Properties | WakeSim | Offwind";
             return View();
         }
 
@@ -61,6 +63,7 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
 
         public ActionResult Simulation()
         {
+            ViewBag.Title = "Simulation | WakeSim | Offwind";
             return View();
         }
 
@@ -130,8 +133,9 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             return File(file, "application/zip", "output.zip");
         }
 
-        public ActionResult Results()
+        public ActionResult PostProcessing()
         {
+            ViewBag.Title = "Post-processing | WakeSim | Offwind";
             return View();
         }
 
