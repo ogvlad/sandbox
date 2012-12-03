@@ -118,14 +118,14 @@ namespace MvcApplication1.Areas.EngineeringTools.Controllers
             var resultsDir = Session["WakeSimDir"] as string;
             if (resultsDir == null)
             {
-                return File(new byte[0], "");
+                return File(new byte[0], "text/plain");
             }
             string dir = WebConfigurationManager.AppSettings["WakeSimulationDir"];
             dir = Path.Combine(dir, resultsDir); // root temp dir
 
             var file = Path.Combine(dir, "output.zip");
             if (!System.IO.File.Exists(file))
-                return File(new byte[0], "");
+                return File(new byte[0], "text/plain");
 
             return File(file, "application/zip", "output.zip");
         }

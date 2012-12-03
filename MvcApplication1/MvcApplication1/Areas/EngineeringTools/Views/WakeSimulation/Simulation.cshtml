@@ -8,13 +8,25 @@
         <li><a href="@Url.Action("GeneralProperties", "WakeSimulation", new { area = "EngineeringTools" })">Wake Simulation</a> <span class="divider">/</span></li>
         <li class="active">Simulation</li>
     </ul>
-    <a class="btn btn-info" href="#" id="button-run">Run</a>
-    <div id="download-link" style="display: none;"><a href="@Url.Action("DownloadResult", "WakeSimulation", new { area = "EngineeringTools" })">Download result</a></div>
+    <div class="row-fluid">
+        <div class="span3">
+            <a class="btn btn-info btn-large" href="#" id="button-run">Run simulation</a>
+        </div>
+        <div class="span3">
+            <a class="btn btn-success btn-large disabled" id="download-link" href="@Url.Action("DownloadResult", "WakeSimulation", new { area = "EngineeringTools" })">Download result</a>
+        </div>
+    </div>
+    
 </div>
 @section scripts
 {
     <script>
         $(document).ready(function () {
+            var canBeDownloaded = false;
+            $('#download-link').click(function () {
+                return canBeDownloaded;
+            });
+
             $('#button-run').click(function () {
                 $.ajax({
                     url: "@Url.Action("Run", "WakeSimulation", new { area = "EngineeringTools" })",
@@ -22,9 +34,11 @@
                     type: "POST",
                     contentType: 'application/json; charset=utf-8',
                     success: function () {
-                        $('#download-link').show();
+                        canBeDownloaded = true;
+                        $('#download-link').removeClass('disabled');
                     }
                 });
+                
             });
         });        
     </script>    
